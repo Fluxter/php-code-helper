@@ -1,0 +1,16 @@
+{
+    "name": "Existing Docker Compose (Extend)",
+    "image": "fluxter/web-php-dev:7.4",
+    "service": "app",
+    "settings": {
+        "terminal.integrated.shell.linux": null
+    },
+    "extensions": [
+        "esbenp.prettier-vscode",
+        "bmewburn.vscode-intelephense-client",
+        "phproberto.vscode-php-getters-setters",
+        "felixfbecker.php-debug",
+        "junstyle.php-cs-fixer",
+        "yzhang.markdown-all-in-one",
+    ],
+}

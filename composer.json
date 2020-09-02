@@ -1,0 +1,12 @@
+{
+    "require": {
+        "symfony/finder": "^5.1",
+        "symfony/console": "^5.1",
+        "symfony/filesystem": "^5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fluxter\\SymfonyHelper\\": "."
+        }
+    }
+}
