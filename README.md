@@ -18,3 +18,14 @@ Voila!
 $ pch
 ```
 should work now
+
+## How to update
+```bash
+$ composer global update fluxter/php-code-helper
+```
+## How to use
+### Fix Namespaces
+This small command sets the namespace in all files according to your psr-4 level
+```bash
+$ pch fix-namespaces [Path to your composer.json]
+```
