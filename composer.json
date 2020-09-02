@@ -10,5 +10,8 @@
         "psr-4": {
             "Fluxter\\PhpCodeHelper\\": "."
         }
-    }
+    },
+    "bin": [
+        "pch"
+    ]
 }
