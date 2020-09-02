@@ -1,12 +1,6 @@
 <?php
 
-/*
- * This file is part of the Fluxter Kundencenter package.
- * (c) Fluxter <http://fluxter.net/>
- * You are not allowed to see or use this code if you are not a part of Fluxter!
- */
-
-namespace Fluxter\SymfonyHelper\Commands;
+namespace Fluxter\PhpCodeHelper\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

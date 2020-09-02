@@ -1,11 +1,11 @@
 <?php
 
-namespace Fluxter\SymfonyHelper;
+namespace Fluxter\PhpCodeHelper;
 
 require "vendor/autoload.php";
 include "Commands/UpdateNamespaceCommand.php";
 
-use Fluxter\SymfonyHelper\Commands\UpdateNamespaceCommand;
+use Fluxter\PhpCodeHelper\Commands\UpdateNamespaceCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();

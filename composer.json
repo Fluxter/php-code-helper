@@ -1,5 +1,5 @@
 {
-    "name": "fluxter/symfony-helper",
+    "name": "fluxter/php-code-helper",
     "description": "A small symfony helper CLI tool",
     "require": {
         "symfony/finder": "^5.1",
@@ -8,7 +8,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Fluxter\\SymfonyHelper\\": "."
+            "Fluxter\\PhpCodeHelper\\": "."
         }
     }
 }
