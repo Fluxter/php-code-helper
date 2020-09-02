@@ -1,4 +1,6 @@
 {
+    "name": "fluxter/symfony-helper",
+    "description": "A small symfony helper CLI tool",
     "require": {
         "symfony/finder": "^5.1",
         "symfony/console": "^5.1",
