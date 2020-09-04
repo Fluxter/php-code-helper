@@ -1,9 +1,8 @@
 <?php
 
 /*
- * This file is part of the Fluxter Kundencenter package.
+ * Wuhu fancy PCH!
  * (c) Fluxter <http://fluxter.net/>
- * You are not allowed to see or use this code if you are not a part of Fluxter!
  */
 
 namespace Fluxter\PhpCodeHelper\Helper;

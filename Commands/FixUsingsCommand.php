@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Wuhu fancy PCH!
+ * (c) Fluxter <http://fluxter.net/>
+ */
+
 namespace Fluxter\PhpCodeHelper\Commands;
 
 use Fluxter\PhpCodeHelper\Helper\NamespaceHelper;
@@ -37,7 +42,7 @@ class FixUsingsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        ini_set("xdebug.max_nesting_level", 9000);
+        ini_set('xdebug.max_nesting_level', 9000);
         $this->output = $output;
 
         $basePath = $input->getArgument('path');
@@ -52,10 +57,10 @@ class FixUsingsCommand extends Command
 
     private function fixPath(string $basePath)
     {
-        $this->output->writeln("Searching files...");
+        $this->output->writeln('Searching files...');
         $allFiles = NamespaceHelper::getPhpFilesInPath($basePath);
-        
-        $this->output->writeln("Indexing files...");
+
+        $this->output->writeln('Indexing files...');
         $progressBar = new ProgressBar($this->output);
         $progressBar->setFormat('%current%/%max% [%bar%] %percent%% %memory:6s% -- %message%');
 
@@ -63,7 +68,7 @@ class FixUsingsCommand extends Command
         /** @var SplFileInfo $localFile */
         foreach ($progressBar->iterate($allFiles) as $localFile) {
             $progressBar->setMessage($localFile->getRealPath());
-            if (basename($localFile->getPath()) == "fonts") {
+            if ('fonts' == basename($localFile->getPath())) {
                 continue;
             }
             try {
@@ -80,11 +85,11 @@ class FixUsingsCommand extends Command
         }
 
         $progressBar->finish();
-        
-        $this->output->writeln("Fixing files...");
+
+        $this->output->writeln('Fixing files...');
 
         foreach ($this->filesWithClasses as $filePath => $class) {
-            if (strpos($filePath, $basePath . "/vendor") === 0) {
+            if (0 === strpos($filePath, $basePath . '/vendor')) {
                 // We dont want to fix the vendor dir!
                 continue;
             }
@@ -104,7 +109,7 @@ class FixUsingsCommand extends Command
             $this->output->write(" - Using not exists! $using. Searching alternative... ");
             $alternative = $this->getMostLikelyCorrectUsing($using);
             if (!$alternative) {
-                $this->output->writeln("No found :(");
+                $this->output->writeln('No found :(');
                 continue;
             }
 
@@ -116,18 +121,17 @@ class FixUsingsCommand extends Command
 
     private function getMostLikelyCorrectUsing($search): ?string
     {
-        $searchParts = explode("\\", $search);
-    
+        $searchParts = explode('\\', $search);
+
         $result = [];
         foreach ($this->fqdnClasses as $check) {
-            $checkParts = explode("\\", $check);
+            $checkParts = explode('\\', $check);
             $correct = 0;
             $searchPartsIndex = count($searchParts) - 1;
-        
+
             // echo "{$search} = $check";            echo "\n";
             for ($i = count($checkParts) - 1; $i > 0 && $searchPartsIndex > 0; $i--) {
-            
-            // echo "{$searchParts[$searchPartsIndex]} = {$checkParts[$i]}";
+                // echo "{$searchParts[$searchPartsIndex]} = {$checkParts[$i]}";
                 // echo "\n";
                 if ($searchParts[$searchPartsIndex] == $checkParts[$i]) {
                     $correct++;
@@ -136,19 +140,19 @@ class FixUsingsCommand extends Command
                 }
                 $searchPartsIndex--;
             }
-        
-            if ($correct != 0) {
+
+            if (0 != $correct) {
                 $result[$check] = $correct;
             }
         }
-    
-        if (count($result) == 0) {
+
+        if (0 == count($result)) {
             return null;
         }
         arsort($result);
+
         return array_key_first($result);
     }
-
 
     private function fqdnInStack($search)
     {

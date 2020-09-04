@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Wuhu fancy PCH!
+ * (c) Fluxter <http://fluxter.net/>
+ */
+
 namespace Fluxter\PhpCodeHelper\Commands;
 
 use Fluxter\PhpCodeHelper\Helper\NamespaceHelper;
@@ -8,7 +13,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 class FixNamespaceCommand extends Command
@@ -62,7 +66,7 @@ class FixNamespaceCommand extends Command
 
     private function fixFile(string $basePath, string $baseNamespace, string $absoluteFilePath)
     {
-        $this->output->write('- Processing file ' . $absoluteFilePath . "... ");
+        $this->output->write('- Processing file ' . $absoluteFilePath . '... ');
         $fqdn = $baseNamespace . str_replace('/', '\\', str_replace($basePath, '', str_replace('.php', '', $absoluteFilePath)));
         $fqdn = str_replace('\\\\', '\\', $fqdn);
         $namespace = NamespaceHelper::getNamespaceFromFqdn($fqdn);
@@ -70,12 +74,13 @@ class FixNamespaceCommand extends Command
 
         $fileContent = file_get_contents($absoluteFilePath);
         if (strpos($fileContent, "namespace $namespace;")) {
-            $this->output->writeln("Ok!");
+            $this->output->writeln('Ok!');
+
             return;
         }
-        $this->output->write("Fixing... ");
-        $newFileContent = preg_replace("/namespace (.*);/", "namespace $namespace;", $fileContent);
+        $this->output->write('Fixing... ');
+        $newFileContent = preg_replace('/namespace (.*);/', "namespace $namespace;", $fileContent);
         file_put_contents($absoluteFilePath, $newFileContent);
-        $this->output->writeln("Done!");
+        $this->output->writeln('Done!');
     }
 }

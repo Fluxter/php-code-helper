@@ -1,13 +1,15 @@
 <?php
 
+/*
+ * Wuhu fancy PCH!
+ * (c) Fluxter <http://fluxter.net/>
+ */
+
 namespace Fluxter\PhpCodeHelper\Model;
 
-use Microsoft\PhpParser\DiagnosticsProvider;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Parser;
-use Microsoft\PhpParser\PositionUtilities;
-use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\Node\SourceFileNode;
+use Microsoft\PhpParser\Parser;
 
 class PhpFileInformation
 {
@@ -32,6 +34,7 @@ class PhpFileInformation
                 return $statement->name->getText();
             }
         }
+
         return null;
     }
 
@@ -48,7 +51,7 @@ class PhpFileInformation
     public function getFqdns(): \Iterator
     {
         $namespace = $this->getNamespace();
-        
+
         foreach ($this->getClasses() as $class) {
             yield "{$namespace}\\{$class}";
         }
