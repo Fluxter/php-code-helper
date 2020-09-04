@@ -34,7 +34,7 @@ Force sets the namespace in your folder to the according composer.json psr-4 lev
 ```bash
 $ pch fix-namespaces [Path to the composer.json containing folder]
 ```
-### Fix Namespaces
+### Fix Usings
 If you e.g. refactored many things to new namespaces, the fx-namespaces command should help you with that.   
 But now your code is trying to `use` all the files from the old namespace.
 
