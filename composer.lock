@@ -4,8 +4,49 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "03b1e1ca7629ce4e164b997c0007e894",
+    "content-hash": "ef94e188693c38704056519ceb881431",
     "packages": [
+        {
+            "name": "microsoft/tolerant-php-parser",
+            "version": "v0.0.22",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/microsoft/tolerant-php-parser.git",
+                "reference": "3fdca6be0f9dc318b8c440d0c0f2a47a173de7a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/microsoft/tolerant-php-parser/zipball/3fdca6be0f9dc318b8c440d0c0f2a47a173de7a6",
+                "reference": "3fdca6be0f9dc318b8c440d0c0f2a47a173de7a6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Microsoft\\PhpParser\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Lourens",
+                    "email": "roblou@microsoft.com"
+                }
+            ],
+            "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
+            "time": "2020-08-08T23:25:34+00:00"
+        },
         {
             "name": "psr/container",
             "version": "1.0.0",
