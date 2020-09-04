@@ -4,7 +4,8 @@
     "require": {
         "symfony/finder": "^5.1",
         "symfony/console": "^5.1",
-        "symfony/filesystem": "^5.1"
+        "symfony/filesystem": "^5.1",
+        "microsoft/tolerant-php-parser": "^0.0.22"
     },
     "autoload": {
         "psr-4": {

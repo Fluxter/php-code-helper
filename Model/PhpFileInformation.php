@@ -1,62 +1,66 @@
 <?php
 
-/*
- * This file is part of the Fluxter Kundencenter package.
- * (c) Fluxter <http://fluxter.net/>
- * You are not allowed to see or use this code if you are not a part of Fluxter!
- */
-
 namespace Fluxter\PhpCodeHelper\Model;
+
+use Microsoft\PhpParser\DiagnosticsProvider;
+use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Parser;
+use Microsoft\PhpParser\PositionUtilities;
+use Microsoft\PhpParser\Token;
+use Microsoft\PhpParser\Node\SourceFileNode;
 
 class PhpFileInformation
 {
     private string $file;
     private ?string $content = null;
 
-    private const REGEX_NAMESPACE = '/\nnamespace (.*);/';
-    private const REGEX_CLASS = '/\n(?:(abstract |final |))(?:class|interface) ([a-zA-Z0-9\\\\]+)/';
-    private const REGEX_USING = '/\nuse ([a-zA-Z0-9\\\\]+)|\nuse ([a-zA-Z0-9\\\\]+) as .*;$/s';
+    private Parser $parser;
+    private SourceFileNode $node;
 
     public function __construct(string $file)
     {
         $this->file = $file;
-        $this->getUsings();
+
+        $this->parser = new Parser();
+        $this->node = $this->parser->parseSourceFile($this->getContent());
     }
 
-    public function getNamespace()
+    public function getNamespace(): ?string
     {
-        $content = $this->getContent();
-        preg_match(self::REGEX_NAMESPACE, $content, $matches);
-
-        return array_key_exists(1, $matches) ? $matches[1] : null;
+        foreach ($this->node->statementList as $statement) {
+            if ($statement instanceof Node\Statement\NamespaceDefinition) {
+                return $statement->name->getText();
+            }
+        }
+        return null;
     }
 
-    public function getClass(): ?string
+    public function getClasses(): \Iterator
     {
-        $content = $this->getContent();
-        preg_match(self::REGEX_CLASS, $content, $matches);
-
-        return array_key_exists(1, $matches) ? $matches[1] : null;
-    }
-
-    public function getFqdn(): ?string
-    {
-        try {
-            $class = $this->getClass();
-            $namespace = $this->getNamespace();
-
-            return $namespace && $class ? "$namespace\\$class" : null;
-        } catch (\Throwable $ex) {
-            return null;
+        foreach ($this->node->statementList as $statement) {
+            if ($statement instanceof Node\Statement\ClassDeclaration) {
+                // yield $statement->name->getText();
+                yield substr($this->getContent(), $statement->name->getFullStart() + 1, $statement->name->getWidth());
+            }
         }
     }
 
-    public function getUsings()
+    public function getFqdns(): \Iterator
     {
-        $content = $this->getContent();
-        preg_match_all(self::REGEX_USING, $content, $matches);
+        $namespace = $this->getNamespace();
+        
+        foreach ($this->getClasses() as $class) {
+            yield "{$namespace}\\{$class}";
+        }
+    }
 
-        return $matches[1];
+    public function getUsings(): \Iterator
+    {
+        foreach ($this->node->statementList as $statement) {
+            if ($statement instanceof Node\Statement\NamespaceUseDeclaration) {
+                yield $statement->useClauses->getText();
+            }
+        }
     }
 
     public function getContent()
