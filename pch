@@ -3,12 +3,13 @@
 
 namespace Fluxter\PhpCodeHelper;
 
-require "vendor/autoload.php";
-include "Commands/UpdateNamespaceCommand.php";
+require 'vendor/autoload.php';
 
-use Fluxter\PhpCodeHelper\Commands\UpdateNamespaceCommand;
+use Fluxter\PhpCodeHelper\Commands\FixNamespaceCommand;
+use Fluxter\PhpCodeHelper\Commands\FixUsingsCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
-$application->add(new UpdateNamespaceCommand());
+$application->add(new FixNamespaceCommand());
+$application->add(new FixUsingsCommand());
 $application->run();
