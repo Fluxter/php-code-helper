@@ -10,7 +10,7 @@ Using this *may* break your whole application! (Mine was fixed :))
 ### Globally
 Require the package 
 ```bash
-$ composer global require fluxter/php-code-helper:dev-master
+$ composer global require fluxter/php-code-helper
 ```
 
 After that, make sure composer vendor bin is inside your path!
