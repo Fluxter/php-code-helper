@@ -1,7 +1,7 @@
 # PHP Helper
 You wished there was an application like this *Yea its so big buhu*
 ## WARNING
-Please use this tool on you own risk.  
+Please use this tool on your own risk.  
 Before using it, make a backup of your code (or use git!)
 
 Using this *may* break your whole application! (Mine was fixed :))
@@ -34,8 +34,6 @@ Force sets the namespace in your folder to the according composer.json psr-4 lev
 ```bash
 $ pch fix-namespaces [Path to the composer.json containing folder]
 ```
-
-## How to use
 ### Fix Namespaces
 If you e.g. refactored many things to new namespaces, the fx-namespaces command should help you with that.   
 But now your code is trying to `use` all the files from the old namespace.
