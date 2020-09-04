@@ -2,6 +2,7 @@
 
 namespace Fluxter\PhpCodeHelper\Commands;
 
+use Fluxter\PhpCodeHelper\Helper\NamespaceHelper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,12 +11,11 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
-class UpdateNamespaceCommand extends Command
+class FixNamespaceCommand extends Command
 {
     protected static $defaultName = 'fix-namespaces';
 
     private OutputInterface $output;
-    private Filesystem $fs;
 
     public function __construct()
     {
@@ -54,7 +54,7 @@ class UpdateNamespaceCommand extends Command
             $phpFilePath = realpath($path . '/' . $psr4Path);
 
             /** @var SplFileInfo $file */
-            foreach ($this->getPhpFilesInPath($phpFilePath) as $file) {
+            foreach (NamespaceHelper::getPhpFilesInPath($phpFilePath) as $file) {
                 $this->fixFile($phpFilePath, $psr4Namespace, $file->getRealPath());
             }
         }
@@ -65,8 +65,8 @@ class UpdateNamespaceCommand extends Command
         $this->output->write('- Processing file ' . $absoluteFilePath . "... ");
         $fqdn = $baseNamespace . str_replace('/', '\\', str_replace($basePath, '', str_replace('.php', '', $absoluteFilePath)));
         $fqdn = str_replace('\\\\', '\\', $fqdn);
-        $namespace = $this->getNamespaceFromFqdn($fqdn);
-        $className = $this->getClassNameFromFqdn($fqdn);
+        $namespace = NamespaceHelper::getNamespaceFromFqdn($fqdn);
+        $className = NamespaceHelper::getClassNameFromFqdn($fqdn);
 
         $fileContent = file_get_contents($absoluteFilePath);
         if (strpos($fileContent, "namespace $namespace;")) {
@@ -77,27 +77,5 @@ class UpdateNamespaceCommand extends Command
         $newFileContent = preg_replace("/namespace (.*);/", "namespace $namespace;", $fileContent);
         file_put_contents($absoluteFilePath, $newFileContent);
         $this->output->writeln("Done!");
-    }
-
-    private function getClassNameFromFqdn(string $fqdn): string
-    {
-        $arr = explode('\\', $fqdn);
-        $className = end($arr);
-
-        return $className;
-    }
-
-    private function getNamespaceFromFqdn(string $fqdn): string
-    {
-        $namespace = str_replace($this->getClassNameFromFqdn($fqdn), '', $fqdn);
-
-        return substr($namespace, 0, strlen($namespace) - 1);
-    }
-
-    private function getPhpFilesInPath(string $basePath)
-    {
-        $finder = new Finder();
-
-        return $finder->files()->name('*.php')->in($basePath);
     }
 }
