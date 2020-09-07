@@ -2,6 +2,7 @@
 
 namespace Fluxter\PhpCodeHelper\Commands;
 
+use Fluxter\PhpCodeHelper\Helper\LikenessHelper;
 use Fluxter\PhpCodeHelper\Helper\NamespaceHelper;
 use Fluxter\PhpCodeHelper\Model\PhpFileInformation;
 use Symfony\Component\Console\Command\Command;
@@ -102,7 +103,7 @@ class FixUsingsCommand extends Command
             }
 
             $this->output->write(" - Using not exists! $using. Searching alternative... ");
-            $alternative = $this->getMostLikelyCorrectUsing($using);
+            $alternative = LikenessHelper::getAlike($using, $this->fqdnClasses, '\\');
             if (!$alternative) {
                 $this->output->writeln("No found :(");
                 continue;
@@ -113,42 +114,6 @@ class FixUsingsCommand extends Command
             file_put_contents($filePath, $newContent);
         }
     }
-
-    private function getMostLikelyCorrectUsing($search): ?string
-    {
-        $searchParts = explode("\\", $search);
-    
-        $result = [];
-        foreach ($this->fqdnClasses as $check) {
-            $checkParts = explode("\\", $check);
-            $correct = 0;
-            $searchPartsIndex = count($searchParts) - 1;
-        
-            // echo "{$search} = $check";            echo "\n";
-            for ($i = count($checkParts) - 1; $i > 0 && $searchPartsIndex > 0; $i--) {
-            
-            // echo "{$searchParts[$searchPartsIndex]} = {$checkParts[$i]}";
-                // echo "\n";
-                if ($searchParts[$searchPartsIndex] == $checkParts[$i]) {
-                    $correct++;
-                } else {
-                    break;
-                }
-                $searchPartsIndex--;
-            }
-        
-            if ($correct != 0) {
-                $result[$check] = $correct;
-            }
-        }
-    
-        if (count($result) == 0) {
-            return null;
-        }
-        arsort($result);
-        return array_key_first($result);
-    }
-
 
     private function fqdnInStack($search)
     {

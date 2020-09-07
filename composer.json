@@ -5,7 +5,8 @@
         "symfony/finder": "^5.1",
         "symfony/console": "^5.1",
         "symfony/filesystem": "^5.1",
-        "microsoft/tolerant-php-parser": "^0.0.22"
+        "microsoft/tolerant-php-parser": "^0.0.22",
+        "symfony/process": "^5.1"
     },
     "autoload": {
         "psr-4": {

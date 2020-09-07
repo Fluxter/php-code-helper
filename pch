@@ -6,10 +6,12 @@ namespace Fluxter\PhpCodeHelper;
 require 'vendor/autoload.php';
 
 use Fluxter\PhpCodeHelper\Commands\FixNamespaceCommand;
+use Fluxter\PhpCodeHelper\Commands\FixSymfonyRoutesCommand;
 use Fluxter\PhpCodeHelper\Commands\FixUsingsCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
 $application->add(new FixNamespaceCommand());
 $application->add(new FixUsingsCommand());
+$application->add(new FixSymfonyRoutesCommand());
 $application->run();
