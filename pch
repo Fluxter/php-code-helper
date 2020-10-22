@@ -3,7 +3,7 @@
 
 namespace Fluxter\PhpCodeHelper;
 
-require 'vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
 use Fluxter\PhpCodeHelper\Commands\FixNamespaceCommand;
 use Fluxter\PhpCodeHelper\Commands\FixUsingsCommand;

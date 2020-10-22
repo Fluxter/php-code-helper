@@ -1,6 +1,6 @@
 {
     "name": "Existing Docker Compose (Extend)",
-    "image": "fluxter/web-php-dev:7.4",
+    "image": "fluxter/web-php:7.4-dev",
     "service": "app",
     "settings": {
         "terminal.integrated.shell.linux": null
